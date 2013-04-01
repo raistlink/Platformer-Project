@@ -75,6 +75,22 @@
                  (else
                   (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
                   world))))
+        ((= type SDL_KEYUP)
+         (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION "Key up")
+         (let* ((kevt (SDL_Event-key event))
+                (key (SDL_Keysym-sym
+                      (SDL_KeyboardEvent-keysym kevt))))
+           (cond  ((= key SDLK_LEFT)
+                   (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-hstate (world-player world)) 'left))
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))))
+                       world))
+                  ((= key SDLK_RIGHT)
+                   (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-hstate (world-player world)) 'right))
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))))
+                       world))
+                  (else
+                   (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
+                   world))))
         (else
          world))))
    (let ((posx 80.0))
