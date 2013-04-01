@@ -10,15 +10,15 @@
 
 
 ;; Mapa de prueba, lo ideal seria leer estas listas desde archivo, y tener distribuidos de esta manera los niveles.
-(define my-map '#(#(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+(define my-map '#(#(1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(1 1 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
@@ -68,10 +68,16 @@
                       (make-world 'splash-screen '())))
                  ((= key SDLK_LEFT)
                   (if (eq? (world-gamestate world) 'game-screen)
-                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))))))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))))
+                      world))
                  ((= key SDLK_RIGHT)
                   (if (eq? (world-gamestate world) 'game-screen)
-                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'right (player-vstate (world-player world))))))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'right (player-vstate (world-player world))))
+                      world))
+                 ((= key SDLK_UP)
+                  (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-vstate (world-player world)) 'idle))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'jump))
+                      world))
                  (else
                   (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
                   world))))
@@ -88,12 +94,16 @@
                    (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-hstate (world-player world)) 'right))
                        (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))))
                        world))
+                  ((= key SDLK_UP)
+                   (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-vstate (world-player world)) 'jump))
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'falling)) 
+                       world))
                   (else
                    (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
                    world))))
         (else
          world))))
-   (let ((posx 80.0))
+   (let ((posx 80.0) (jumpcounter 0))
      (lambda (cr time world)
        (println (string-append "time: " (object->string time) " ; world: " (object->string world)))
        (pp (vector-ref (vector-ref my-map 4) 1))
@@ -150,9 +160,7 @@
               (begin
                 (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
                                      (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1)
-                    (begin
-                      (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 3))
-                      (player-hstate-set! (world-player world) 'idle))
+                    (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 1))
                     (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
 
           ;;Going Right
@@ -160,18 +168,33 @@
               (begin
                 (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
                                      (+ (inexact->exact (floor (/ (player-posx (world-player world)) tile-width))) 1)) 1)
-                    (begin
-                      (player-posx-set! (world-player world) (- (player-posx (world-player world)) 3))
-                      (player-hstate-set! (world-player world) 'idle))
+                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) 1))
                     (player-posx-set!  (world-player world) (+ (player-posx (world-player world)) 5)))))
           ;;Falling
-          (if (eq? (player-vstate (world-player world)) 'idle)
+          (if (or (eq? (player-vstate (world-player world)) 'idle) (eq? (player-vstate (world-player world)) 'falling))
               (begin
-                (if (eq? (vector-ref (vector-ref my-map (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
-                                     (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 1)
-                    '()
+                (if (or (eq? (vector-ref (vector-ref my-map (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
+                                         (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 1)
+                        (eq? (vector-ref (vector-ref my-map (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
+                                         (+ (inexact->exact (floor (/ (player-posx (world-player world)) tile-width))) 1)) 1))
+                    (begin
+                      (player-vstate-set! (world-player world) 'idle)
+                      (set! jumpcounter 0))
                     (player-posy-set! (world-player world) (+ (player-posy (world-player world)) 10)))))
           
+          ;;Jumping
+          (if (eq? (player-vstate (world-player world)) 'jump)
+              (begin
+                (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))))
+                                     (inexact->exact (floor (/ ( player-posx (world-player world)) tile-width)))) 1)
+                    (player-vstate-set! (world-player world) 'falling)
+                    (if (> jumpcounter 300)
+                        (begin
+                          (player-vstate-set! (world-player world) 'falling)
+                          (set! jumpcounter 0))
+                        (begin
+                          (player-posy-set! (world-player world) (- (player-posy (world-player world)) 10))
+                          (set! jumpcounter (+ jumpcounter 10)))))))
           ))
        world))
    (make-world
