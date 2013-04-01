@@ -64,7 +64,7 @@
                   'exit)
                  ((= key SDLK_RETURN)
                   (if (eq? (world-gamestate world) 'splash-screen)
-                      (make-world 'game-screen (make-player 300 200 'idle 'idle))
+                      (make-world 'game-screen (make-player 150 200 'idle 'idle))
                       (make-world 'splash-screen '())))
                  ((= key SDLK_LEFT)
                   (if (eq? (world-gamestate world) 'game-screen)
@@ -149,9 +149,9 @@
           (if (eq? (player-hstate (world-player world)) 'left)
               (begin
                 (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
-                                     (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 1)
+                                     (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1)
                     (begin
-                      (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 5))
+                      (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 3))
                       (player-hstate-set! (world-player world) 'idle))
                     (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
 
@@ -161,9 +161,16 @@
                 (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
                                      (+ (inexact->exact (floor (/ (player-posx (world-player world)) tile-width))) 1)) 1)
                     (begin
-                      (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5))
+                      (player-posx-set! (world-player world) (- (player-posx (world-player world)) 3))
                       (player-hstate-set! (world-player world) 'idle))
                     (player-posx-set!  (world-player world) (+ (player-posx (world-player world)) 5)))))
+          ;;Falling
+          (if (eq? (player-vstate (world-player world)) 'idle)
+              (begin
+                (if (eq? (vector-ref (vector-ref my-map (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
+                                     (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 1)
+                    '()
+                    (player-posy-set! (world-player world) (+ (player-posy (world-player world)) 10)))))
           
           ))
        world))
