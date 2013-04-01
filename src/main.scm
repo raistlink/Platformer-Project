@@ -158,8 +158,8 @@
           ;;Going Left
           (if (eq? (player-hstate (world-player world)) 'left)
               (begin
-                (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
-                                     (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1)
+                (if (or (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
+                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1))
                     (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 1))
                     (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
 
@@ -180,7 +180,9 @@
                     (begin
                       (player-vstate-set! (world-player world) 'idle)
                       (set! jumpcounter 0))
-                    (player-posy-set! (world-player world) (+ (player-posy (world-player world)) 10)))))
+                    (begin
+                      (player-posy-set! (world-player world) (+ (player-posy (world-player world)) 10))
+                      (player-vstate-set! (world-player world) 'falling)))))
           
           ;;Jumping
           (if (eq? (player-vstate (world-player world)) 'jump)
