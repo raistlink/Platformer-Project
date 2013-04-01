@@ -8,13 +8,15 @@
 (define horizontal-tile-cache (+ 2  (/ screen-width tile-width)))
 (define vertical-tile-cache (+ 2  (/ screen-height tile-width)))
 
+
+;; Mapa de prueba, lo ideal seria leer estas listas desde archivo, y tener distribuidos de esta manera los niveles.
 (define my-map '#(#(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 1 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
@@ -39,7 +41,8 @@
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)))
 
-(define-structure world gamestate)
+(define-structure player posx posy hstate vstate)
+(define-structure world gamestate player)
 
 (define (main)
   ((fusion:create-simple-gl-cairo '(width: 1280  height: 752))
@@ -61,8 +64,14 @@
                   'exit)
                  ((= key SDLK_RETURN)
                   (if (eq? (world-gamestate world) 'splash-screen)
-                      (make-world 'game-screen)
-                      (make-world 'splash-screen)))
+                      (make-world 'game-screen (make-player 300 200 'idle 'idle))
+                      (make-world 'splash-screen '())))
+                 ((= key SDLK_LEFT)
+                  (if (eq? (world-gamestate world) 'game-screen)
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))))))
+                 ((= key SDLK_RIGHT)
+                  (if (eq? (world-gamestate world) 'game-screen)
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'right (player-vstate (world-player world))))))
                  (else
                   (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
                   world))))
@@ -71,10 +80,12 @@
    (let ((posx 80.0))
      (lambda (cr time world)
        (println (string-append "time: " (object->string time) " ; world: " (object->string world)))
-       (pp (eq? (vector-ref (vector-ref my-map 1) 1) 1))
+       (pp (vector-ref (vector-ref my-map 4) 1))
        ;;(SDL_LogInfo SDL_LOG_CATEGORY_APPLICATION (object->string (SDL_GL_Extension_Supported "GL_EXT_texture_format_BGRA8888")))
        (case (world-gamestate world)
          ((splash-screen)
+
+          ;;Menu screen, to be implemented
           (cairo_set_source_rgba cr 0.0 0.0 0.0 1.0)
           (cairo_rectangle cr 0.0 0.0 screen-width screen-height)
           (cairo_fill cr)
@@ -85,6 +96,8 @@
           (cairo_show_text cr "MENU SCREEN")
           (cairo_fill cr))
          ((game-screen)
+
+          ;;Just testing code.
           (cairo_set_source_rgba cr 0.0 0.0 0.0 1.0)
           (cairo_rectangle cr 0.0 0.0 screen-width screen-height)
           (cairo_fill cr)
@@ -94,20 +107,51 @@
           (cairo_move_to cr 200.0 400.0)
           (cairo_show_text cr "Game-Screen Test")
           (cairo_fill cr)
+
+          ;;Drawing the player
+          (cairo_set_source_rgba cr 0.0 0.0 1.0 1.0)
+          (cairo_rectangle cr (exact->inexact (player-posx (world-player world))) (exact->inexact (player-posy (world-player world))) 50.0 50.0)
+          (cairo_fill cr)
+          
+          ;;Drawing the tiles.
           (cairo_set_source_rgba cr 0.0 1.0 0.0 1.0)
           (let loop ((rest my-map) (counterX 0) (counterY 0))
             (if (and (eq? counterX 29) (eq? counterY 29))
                 '()
                 (begin 
-                  (if (eq? (vector-ref (vector-ref my-map counterX) counterY) 1)
+                  (if (eq? (vector-ref (vector-ref my-map counterY) counterX) 1)
                       (begin
                         (cairo_rectangle cr (exact->inexact (* counterX tile-width)) (exact->inexact (* counterY tile-height)) tile-width tile-height)
                         (cairo_fill cr)))
                   (if (eq? counterX 29)
                       (loop rest (- counterX 29) (+ counterY 1))
                       (loop rest (+ counterX 1) counterY)))))
+          
+          ;;Collision calculation
+
+          ;;Going Left
+          (if (eq? (player-hstate (world-player world)) 'left)
+              (begin
+                (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
+                                     (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 1)
+                    (begin
+                      (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 5))
+                      (player-hstate-set! (world-player world) 'idle))
+                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
+
+          ;;Going Right
+          (if (eq? (player-hstate (world-player world)) 'right)
+              (begin
+                (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
+                                     (+ (inexact->exact (floor (/ (player-posx (world-player world)) tile-width))) 1)) 1)
+                    (begin
+                      (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5))
+                      (player-hstate-set! (world-player world) 'idle))
+                    (player-posx-set!  (world-player world) (+ (player-posx (world-player world)) 5)))))
+          
           ))
        world))
    (make-world
-    'splash-screen)))
+    'splash-screen
+    '())))
 
