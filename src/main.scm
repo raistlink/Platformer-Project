@@ -16,8 +16,8 @@
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(1 1 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
-                  #(1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
+                  #(1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
                   #(0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0)
@@ -160,7 +160,7 @@
               (begin
                 (if (or (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
                                          (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1))
-                    (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 1))
+                    (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 0))
                     (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
 
           ;;Going Right
@@ -168,7 +168,7 @@
               (begin
                 (if (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
                                      (+ (inexact->exact (floor (/ (player-posx (world-player world)) tile-width))) 1)) 1)
-                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) 1))
+                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) 0))
                     (player-posx-set!  (world-player world) (+ (player-posx (world-player world)) 5)))))
           ;;Falling
           (if (or (eq? (player-vstate (world-player world)) 'idle) (eq? (player-vstate (world-player world)) 'falling))
