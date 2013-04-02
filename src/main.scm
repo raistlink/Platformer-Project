@@ -12,12 +12,12 @@
 
 ;; Mapa de prueba, lo ideal seria leer estas listas desde archivo, y tener distribuidos de esta manera los niveles.
 (define my-map '#(#(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)
+                  #(1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 1 0 0 1 1 0 1 1 1 1 1 1 1 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 1)
+                  #(1 1 0 0 1 1 0 0 0 1 1 1 1 1 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 1 0 0 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 1 0 1 0 0 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 1 1 1 1 1 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1)
@@ -65,7 +65,7 @@
                   'exit)
                  ((= key SDLK_RETURN)
                   (if (eq? (world-gamestate world) 'splash-screen)
-                      (make-world 'game-screen (make-player 150 200 'idle 'idle))
+                      (make-world 'game-screen (make-player (* tile-width 3) (* tile-width 4) 'idle 'idle))
                       (make-world 'splash-screen '())))
                  ((= key SDLK_LEFT)
                   (if (eq? (world-gamestate world) 'game-screen)
@@ -131,14 +131,16 @@
 
           ;;Drawing the player
           (cairo_set_source_rgba cr 0.0 0.0 1.0 1.0)
-          (cairo_rectangle cr (exact->inexact (player-posx (world-player world))) (exact->inexact (player-posy (world-player world))) 50.0 50.0)
+          (cairo_rectangle cr (exact->inexact (player-posx (world-player world))) (exact->inexact (player-posy (world-player world))) tile-width tile-height)
           (cairo_fill cr)
           
           ;;Drawing the tiles.
           (cairo_set_source_rgba cr 0.0 1.0 0.0 1.0)
           (let loop ((rest my-map) (counterX 0) (counterY 0))
             (if (and (eq? counterX 29) (eq? counterY 29))
-                '()
+                (begin
+                  (cairo_rectangle cr (exact->inexact (* counterX tile-width)) (exact->inexact (* counterY tile-height)) tile-width tile-height)
+                  (cairo_fill cr))
                 (begin 
                   (if (eq? (vector-ref (vector-ref my-map counterY) counterX) 1)
                       (begin
@@ -154,21 +156,21 @@
           (if (eq? (player-hstate (world-player world)) 'left)
               (begin
                 (if (or (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
-                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1)
-                        (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (+ (- tile-height 3) (player-posy (world-player world))) tile-height)))) 
-                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) 2) tile-width)))) 1) )
+                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) (/ tile-width 25)) tile-width)))) 1)
+                        (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (+ (- tile-height (/ tile-height 16.666)) (player-posy (world-player world))) tile-height)))) 
+                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) (/ tile-width 25)) tile-width)))) 1) )
                     (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 0))
-                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) 5)))))
+                    (player-posx-set! (world-player world) (- (player-posx (world-player world)) (/ tile-width 10))))))
 
           ;;Going Right
           (if (eq? (player-hstate (world-player world)) 'right)
               (begin
                 (if (or (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
-                                         (inexact->exact (floor  (/  (+ (+ tile-width 5) (player-posx (world-player world))) tile-width)))) 1)
-                        (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (+ (- tile-height 3) (player-posy (world-player world))) tile-height)))) 
-                                         (inexact->exact (floor  (/  (+ (+ tile-width 5) (player-posx (world-player world))) tile-width)))) 1))
+                                         (inexact->exact (floor  (/  (+ (+ tile-width (/ tile-width 10)) (player-posx (world-player world))) tile-width)))) 1)
+                        (eq? (vector-ref (vector-ref my-map (inexact->exact (floor (/ (+ (- tile-height (/ tile-height 16.666)) (player-posy (world-player world))) tile-height)))) 
+                                         (inexact->exact (floor  (/  (+ (+ tile-width (/ tile-width 10)) (player-posx (world-player world))) tile-width)))) 1))
                     (player-posx-set! (world-player world) (- (player-posx (world-player world)) 0))
-                    (player-posx-set! (world-player world) (+ (player-posx (world-player world)) 5)))))
+                    (player-posx-set! (world-player world) (+ (player-posx (world-player world)) (/ tile-width 10))))))
 
 
           ;;Falling
@@ -182,7 +184,7 @@
                       (player-vstate-set! (world-player world) 'idle)
                       (set! jumpcounter 0))
                     (begin
-                      (player-posy-set! (world-player world) (+ (player-posy (world-player world)) 10))
+                      (player-posy-set! (world-player world) (+ (player-posy (world-player world)) (/ tile-height 5)))
                       (player-vstate-set! (world-player world) 'falling)))))
           
           ;;Jumping
@@ -194,13 +196,15 @@
                                          (inexact->exact (floor (/ (+ tile-width (player-posx (world-player world))) tile-width)))) 1) 
                         )
                     (player-vstate-set! (world-player world) 'falling)
-                    (if (> jumpcounter 300)
+                    (if (> jumpcounter (* tile-width 6))
                         (begin
                           (player-vstate-set! (world-player world) 'falling)
                           (set! jumpcounter 0))
                         (begin
-                          (player-posy-set! (world-player world) (- (player-posy (world-player world)) 10))
-                          (set! jumpcounter (+ jumpcounter 10)))))))
+                          (player-posy-set! (world-player world) (- (player-posy (world-player world)) (/ tile-width 5)))
+                          (set! jumpcounter (+ jumpcounter (/ tile-width 5))))))))
+
+          
           ))
        world))
    (make-world
