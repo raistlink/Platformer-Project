@@ -77,13 +77,20 @@
 (define level- (cons 3 (cons 28 '())))
 
 (define-structure player posx posy hstate vstate)
-(define-structure world gamestate player)
+(define-structure enemy posx posy)
+(define-structure world gamestate player enemy)
 
 (define (getlevel llist lcounter)
   (let loop ((rest llist) (counter 0))
     (if (eq? counter lcounter)
         (car rest)
         (loop (cdr rest) (+ counter 1)))))
+
+(define (last nlist)
+  (let loop ((rest nlist))
+    (if (null? (cdr rest))
+        (car rest)
+        (loop (cdr rest)))))
 
 (define (main)
   ((fusion:create-simple-gl-cairo '(width: 1280  height: 752))
@@ -105,19 +112,19 @@
                   'exit)
                  ((= key SDLK_RETURN)
                   (if (eq? (world-gamestate world) 'splash-screen)
-                      (make-world 'game-screen (make-player (* tile-width 2) (* tile-width 28) 'idle 'idle))
+                      (make-world 'game-screen (make-player (* tile-width 2) (* tile-width 28) 'idle 'idle) (make-enemy (- 0 tile-width) (- 0 tile-height)))
                       (make-world 'splash-screen '())))
                  ((= key SDLK_LEFT)
                   (if (eq? (world-gamestate world) 'game-screen)
-                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))) (world-enemy world))
                       world))
                  ((= key SDLK_RIGHT)
                   (if (eq? (world-gamestate world) 'game-screen)
-                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'right (player-vstate (world-player world))))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'right (player-vstate (world-player world))) (world-enemy world))
                       world))
                  ((= key SDLK_UP)
                   (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-vstate (world-player world)) 'idle))
-                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'jump))
+                      (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'jump) (world-enemy world))
                       world))
                  (else
                   (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
@@ -129,25 +136,25 @@
                       (SDL_KeyboardEvent-keysym kevt))))
            (cond  ((= key SDLK_LEFT)
                    (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-hstate (world-player world)) 'left))
-                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))))
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))) (world-enemy world))
                        world))
                   ((= key SDLK_RIGHT)
                    (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-hstate (world-player world)) 'right))
-                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))))
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'idle (player-vstate (world-player world))) (world-enemy world))
                        world))
                   ((= key SDLK_UP)
                    (if (and (eq? (world-gamestate world) 'game-screen) (eq? (player-vstate (world-player world)) 'jump))
-                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'falling)) 
+                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) (player-hstate (world-player world)) 'falling) (world-enemy world)) 
                        world))
                   (else
                    (SDL_LogVerbose SDL_LOG_CATEGORY_APPLICATION (string-append "Key: " (number->string key)))
                    world))))
         (else
          world))))
-   (let ((posx 80.0) (jumpcounter 0) (levelcounter 0))
+   (let ((posx 80.0) (jumpcounter 0) (levelcounter 0) (enemyX '(0)) (enemyY '(0)) (enemycounter 0))
      (lambda (cr time world)
        ;;(println (getlevel levellist levelcounter))
-       ;;(pp (vector-ref (vector-ref my-map 4) 1))
+       ;;(pp enemyX)
        ;;(SDL_LogInfo SDL_LOG_CATEGORY_APPLICATION (object->string (SDL_GL_Extension_Supported "GL_EXT_texture_format_BGRA8888")))
        (case (world-gamestate world)
          ((splash-screen)
@@ -162,6 +169,7 @@
           (cairo_move_to cr 300.0 400.0)
           (cairo_show_text cr "MENU SCREEN")
           (cairo_fill cr))
+        
          ((game-screen)
 
           ;;Just testing code.
@@ -172,6 +180,11 @@
           ;;Drawing the player
           (cairo_set_source_rgba cr 0.0 0.0 1.0 1.0)
           (cairo_rectangle cr (exact->inexact (player-posx (world-player world))) (exact->inexact (player-posy (world-player world))) tile-width tile-height)
+          (cairo_fill cr)
+
+          ;;Drawing the enemy
+          (cairo_set_source_rgba cr 1.0 0.0 1.0 1.0)
+          (cairo_rectangle cr (exact->inexact (enemy-posx (world-enemy world))) (exact->inexact (enemy-posy (world-enemy world))) tile-width tile-height)
           (cairo_fill cr)
           
           ;;Drawing the tiles.
@@ -244,9 +257,27 @@
                           (player-posy-set! (world-player world) (- (player-posy (world-player world)) (/ tile-width 5)))
                           (set! jumpcounter (+ jumpcounter (/ tile-width 5))))))))
 
+
+          ;;Enemy Calculations
+          (if (not (and (eq? (player-posx (world-player world)) (last enemyX))
+                       (eq? (player-posy (world-player world)) (last enemyY))))
+              (begin
+                (set! enemyX (append enemyX (list (player-posx (world-player world)))))
+                (set! enemyY (append enemyY (list (player-posy (world-player world)))))))
+
+          (if (eq? enemycounter 0)
+              (set! enemycounter time))
+
+          (if (> (- time enemycounter) 1500)
+              (begin
+                (enemy-posx-set! (world-enemy world) (car enemyX))
+                (enemy-posy-set! (world-enemy world) (car enemyY))
+                (set! enemyX (cdr enemyX))
+                (set! enemyY (cdr enemyY))))
+
           ;;Game calculations
 
-          ;;Level Complete
+          ;; Level Complete
           (if (eq? (player-hstate (world-player world)) 'right)
               (begin
                 (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
@@ -256,7 +287,13 @@
                     (begin
                       (set! levelcounter (+ levelcounter 1))
                       (player-posy-set! (world-player world) (* tile-width (getlevel level+ levelcounter)))
-                      (player-posx-set! (world-player world) (* tile-width 2))))))
+                      (player-posx-set! (world-player world) (* tile-width 2))
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)))))
+
           ;; Level Back
            (if (eq? (player-hstate (world-player world)) 'left)
               (begin
@@ -267,11 +304,17 @@
                     (begin
                       (set! levelcounter (- levelcounter 1))
                       (player-posy-set! (world-player world) (* tile-width (getlevel level- levelcounter)))
-                      (player-posx-set! (world-player world) (* tile-width 49))))))
+                      (player-posx-set! (world-player world) (* tile-width 49))
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)))))
           
           ))
        world))
    (make-world
     'splash-screen
+    '()
     '())))
 
