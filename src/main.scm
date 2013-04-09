@@ -113,7 +113,7 @@
                  ((= key SDLK_RETURN)
                   (if (eq? (world-gamestate world) 'splash-screen)
                       (make-world 'game-screen (make-player (* tile-width 2) (* tile-width 28) 'idle 'idle) (make-enemy (- 0 tile-width) (- 0 tile-height)))
-                      (make-world 'splash-screen '())))
+                      (make-world 'splash-screen '() '())))
                  ((= key SDLK_LEFT)
                   (if (eq? (world-gamestate world) 'game-screen)
                       (make-world (world-gamestate world) (make-player (player-posx (world-player world)) (player-posy (world-player world)) 'left (player-vstate (world-player world))) (world-enemy world))
@@ -160,14 +160,14 @@
          ((splash-screen)
 
           ;;Menu screen, to be implemented
-          (cairo_set_source_rgba cr 0.0 0.0 0.0 1.0)
+          (cairo_set_source_rgba cr 0.0 0.0 1.0 1.0)
           (cairo_rectangle cr 0.0 0.0 screen-width screen-height)
           (cairo_fill cr)
           (cairo_select_font_face cr "Sans" CAIRO_FONT_SLANT_NORMAL CAIRO_FONT_WEIGHT_BOLD)
-          (cairo_set_source_rgba cr 1.0 1.0 1.0 0.8)
+          (cairo_set_source_rgba cr 0.5 1.0 0.5 0.8)
           (cairo_set_font_size cr 80.0)
-          (cairo_move_to cr 300.0 400.0)
-          (cairo_show_text cr "MENU SCREEN")
+          (cairo_move_to cr 250.0 400.0)
+          (cairo_show_text cr "TROUBLE CHEESE")
           (cairo_fill cr))
         
          ((game-screen)
@@ -203,8 +203,8 @@
                       (loop rest (- counterX 50) (+ counterY 1))
                       (loop rest (+ counterX 1) counterY)))))
           
-          ;;Collision calculation
-
+          ;;Player Movement Calculation
+          
           ;;Going Left
           (if (eq? (player-hstate (world-player world)) 'left)
               (begin
@@ -259,8 +259,10 @@
 
 
           ;;Enemy Calculations
+          
           (if (not (and (eq? (player-posx (world-player world)) (last enemyX))
-                       (eq? (player-posy (world-player world)) (last enemyY))))
+                        (eq? (player-posy (world-player world)) (last enemyY))
+                        ))
               (begin
                 (set! enemyX (append enemyX (list (player-posx (world-player world)))))
                 (set! enemyY (append enemyY (list (player-posy (world-player world)))))))
@@ -274,6 +276,21 @@
                 (enemy-posy-set! (world-enemy world) (car enemyY))
                 (set! enemyX (cdr enemyX))
                 (set! enemyY (cdr enemyY))))
+
+          ;;Enemy Collision detection.
+          
+          (if (and (< (abs (- (player-posx (world-player world)) (enemy-posx (world-enemy world)))) (/ tile-width 16.6666))
+                   (< (abs (- (player-posy (world-player world)) (enemy-posy (world-enemy world)))) (/ tile-width 16.6666)))
+              (begin
+                (world-gamestate-set! world 'death-screen)
+                (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                (set! enemyX '(0))
+                (set! enemyY '(0))
+                (set! enemycounter 0)
+                (set! levelcounter 0)))
+          
+
 
           ;;Game calculations
 
@@ -309,9 +326,22 @@
                       (enemy-posy-set! (world-enemy world) (- 0 tile-width))
                       (set! enemyX '(0))
                       (set! enemyY '(0))
-                      (set! enemycounter 0)))))
-          
-          ))
+                      (set! enemycounter 0))))) 
+           )
+         ((death-screen)
+          (cairo_set_source_rgba cr 0.5 0.5 1.0 1.0)
+          (cairo_rectangle cr 0.0 0.0 screen-width screen-height)
+          (cairo_fill cr)
+          (cairo_select_font_face cr "Sans" CAIRO_FONT_SLANT_NORMAL CAIRO_FONT_WEIGHT_BOLD)
+          (cairo_set_source_rgba cr 1.0 1.0 0.5 0.8)
+          (cairo_set_font_size cr 60.0)
+          (cairo_move_to cr 100.0 400.0)
+          (cairo_show_text cr "DID THE CAT EAT YOUR TONGUE?")
+          (cairo_set_font_size cr 10.0)
+          (cairo_move_to cr 600.0 600.0)
+          (cairo_show_text cr "Please kill me")
+          (cairo_fill cr))
+         )
        world))
    (make-world
     'splash-screen
