@@ -181,6 +181,9 @@
           (cairo_set_source_rgba cr 0.0 0.0 1.0 1.0)
           (cairo_rectangle cr (exact->inexact (player-posx (world-player world))) (exact->inexact (player-posy (world-player world))) tile-width tile-height)
           (cairo_fill cr)
+          (cairo_set_source_rgba cr 1.0 1.0 0.0 1.0)
+          (cairo_rectangle cr (exact->inexact (+ (player-posx (world-player world)) (/ tile-width 2))) (exact->inexact (player-posy (world-player world))) (/ tile-width 2) (/ tile-height 2))
+          (cairo_fill cr)
 
           ;;Drawing the enemy
           (cairo_set_source_rgba cr 1.0 0.0 1.0 1.0)
@@ -279,8 +282,8 @@
 
           ;;Enemy Collision detection.
           
-          (if (and (< (abs (- (player-posx (world-player world)) (enemy-posx (world-enemy world)))) (/ tile-width 16.6666))
-                   (< (abs (- (player-posy (world-player world)) (enemy-posy (world-enemy world)))) (/ tile-width 16.6666)))
+          (if (and (< (abs (- (+ (player-posx (world-player world)) (/ tile-width 2)) (+ (enemy-posx (world-enemy world)) (/ tile-height 2)))) (/ tile-width 16.6666))
+                   (< (abs (- (+ (player-posy (world-player world)) (/ tile-width 2)) (+ (enemy-posy (world-enemy world)) (/ tile-height 2)))) (/ tile-width 16.6666)))
               (begin
                 (world-gamestate-set! world 'death-screen)
                 (enemy-posx-set! (world-enemy world) (- 0 tile-width))
