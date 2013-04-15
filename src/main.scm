@@ -186,7 +186,7 @@
                     (begin
                       (player-posy-set! (world-player world) (+ (player-posy (world-player world)) (/ tile-height 5)))
                       (player-vstate-set! (world-player world) 'falling)))))
-          
+
           ;;Jumping
           (if (eq? (player-vstate (world-player world)) 'jump)
               (begin
@@ -207,17 +207,19 @@
 
           ;;Enemy Calculations
           
-
+          ;;Spawn counter
           (if (eq? enemycounter 0)
               (set! enemycounter time))
 
+          ;;Enemy position updating
           (if (> (- time enemycounter) 1500)
               (begin
                 (enemy-posx-set! (world-enemy world) (car enemyX))
                 (enemy-posy-set! (world-enemy world) (car enemyY))
                 (set! enemyX (cdr enemyX))
                 (set! enemyY (cdr enemyY))))
-
+          
+          ;;Enemy position list updating
           (if (not (and (eq? (player-posx (world-player world)) (last enemyX))
                         (eq? (player-posy (world-player world)) (last enemyY))
                         ))
@@ -244,7 +246,7 @@
 
           ;; Obstacle collision calculation
         
-          ;;Going Left
+          ;;Collision on the left
           (if (eq? (player-hstate (world-player world)) 'left)
               (begin
                 (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
@@ -260,7 +262,7 @@
                       (set! enemycounter 0)
                       (set! levelcounter 0)))))
 
-          ;;Going Right
+          ;;Collision on the right
           (if (eq? (player-hstate (world-player world)) 'right)
               (begin
                 (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
@@ -277,7 +279,7 @@
                       (set! levelcounter 0)))))
 
 
-          ;;Falling
+          ;;Collision on bottom
           (if (or (eq? (player-vstate (world-player world)) 'idle) (eq? (player-vstate (world-player world)) 'falling))
               (begin
                 (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
@@ -293,7 +295,7 @@
                       (set! enemycounter 0)
                       (set! levelcounter 0)))))
           
-          ;;Jumping
+          ;;Collision on top
           (if (eq? (player-vstate (world-player world)) 'jump)
               (begin
                 (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))))
