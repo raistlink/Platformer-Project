@@ -36,9 +36,9 @@
                   #(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 1 1 1 0 0 0 0 1 0 0 0 1 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 4 4 4 4 0 0 0 0 1 4 4 4 4 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)))
 
 (define level2 '#(#(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)
@@ -49,32 +49,63 @@
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 2)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1)
                   #(1 0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 1 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
                   #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
-                  #(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)))
+                  #(4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4)))
 
-(define levellist (cons my-map (cons level2 '())))
-(define level+ (cons 28 (cons 3 '())))
-(define level- (cons 3 (cons 28 '())))
+(define level3 '#(#(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 1 1 1 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 1 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(3 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 1 1 1 0 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 1 0 1 0 1 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 1 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 1 1 0 1 0 1 0 1 0 0 1 1 0 0 1 0 1 1 1 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 1 0 1 0 1 1 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 1 1 0 0 1 0 1 0 0 0 1 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1)
+                  #(4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4 4)))
+
+(define levellist (cons my-map (cons level2 (cons level3 '()))))
+(define level+ (cons 28 (cons 3 (cons 8 '()))))
+(define level- (cons 3 (cons 28 (cons 3 '()))))
 
 (define-structure player posx posy hstate vstate)
 (define-structure enemy posx posy)
@@ -200,6 +231,12 @@
                 (begin 
                   (if (eq? (vector-ref (vector-ref rest counterY) counterX) 1)
                       (begin
+                        (cairo_set_source_rgba cr 0.0 1.0 0.0 1.0)
+                        (cairo_rectangle cr (exact->inexact (* counterX tile-width)) (exact->inexact (* counterY tile-height)) tile-width tile-height)
+                        (cairo_fill cr)))
+                  (if (eq? (vector-ref (vector-ref rest counterY) counterX) 4)
+                      (begin
+                        (cairo_set_source_rgba cr 1.0 0.0 0.0 1.0)
                         (cairo_rectangle cr (exact->inexact (* counterX tile-width)) (exact->inexact (* counterY tile-height)) tile-width tile-height)
                         (cairo_fill cr)))
                   (if (eq? counterX 50)
@@ -263,12 +300,6 @@
 
           ;;Enemy Calculations
           
-          (if (not (and (eq? (player-posx (world-player world)) (last enemyX))
-                        (eq? (player-posy (world-player world)) (last enemyY))
-                        ))
-              (begin
-                (set! enemyX (append enemyX (list (player-posx (world-player world)))))
-                (set! enemyY (append enemyY (list (player-posy (world-player world)))))))
 
           (if (eq? enemycounter 0)
               (set! enemycounter time))
@@ -280,10 +311,17 @@
                 (set! enemyX (cdr enemyX))
                 (set! enemyY (cdr enemyY))))
 
+          (if (not (and (eq? (player-posx (world-player world)) (last enemyX))
+                        (eq? (player-posy (world-player world)) (last enemyY))
+                        ))
+              (begin
+                (set! enemyX (append enemyX (list (player-posx (world-player world)))))
+                (set! enemyY (append enemyY (list (player-posy (world-player world)))))))
+
           ;;Enemy Collision detection.
           
-          (if (and (< (abs (- (+ (player-posx (world-player world)) (/ tile-width 2)) (+ (enemy-posx (world-enemy world)) (/ tile-height 2)))) (/ tile-width 16.6666))
-                   (< (abs (- (+ (player-posy (world-player world)) (/ tile-width 2)) (+ (enemy-posy (world-enemy world)) (/ tile-height 2)))) (/ tile-width 16.6666)))
+          (if (and (< (abs (- (+ (player-posx (world-player world)) (/ tile-width 2)) (+ (enemy-posx (world-enemy world)) (/ tile-height 2)))) (/ tile-width 2))
+                   (< (abs (- (+ (player-posy (world-player world)) (/ tile-width 2)) (+ (enemy-posy (world-enemy world)) (/ tile-height 2)))) (/ tile-width 2)))
               (begin
                 (world-gamestate-set! world 'death-screen)
                 (enemy-posx-set! (world-enemy world) (- 0 tile-width))
@@ -296,6 +334,75 @@
 
 
           ;;Game calculations
+
+          ;; Obstacle collision calculation
+        
+          ;;Going Left
+          (if (eq? (player-hstate (world-player world)) 'left)
+              (begin
+                (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
+                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) (/ tile-width 25)) tile-width)))) 4)
+                        (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (+ (- tile-height (/ tile-height 16.666)) (player-posy (world-player world))) tile-height)))) 
+                                         (inexact->exact (floor (/ (- (player-posx (world-player world)) (/ tile-width 25)) tile-width)))) 4) )
+                    (begin
+                      (world-gamestate-set! world 'death-screen)
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)
+                      (set! levelcounter 0)))))
+
+          ;;Going Right
+          (if (eq? (player-hstate (world-player world)) 'right)
+              (begin
+                (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height)))) 
+                                         (inexact->exact (floor  (/  (+ (+ tile-width (/ tile-width 10)) (player-posx (world-player world))) tile-width)))) 4)
+                        (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (+ (- tile-height (/ tile-height 16.666)) (player-posy (world-player world))) tile-height)))) 
+                                         (inexact->exact (floor  (/  (+ (+ tile-width (/ tile-width 10)) (player-posx (world-player world))) tile-width)))) 4))
+                    (begin
+                      (world-gamestate-set! world 'death-screen)
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)
+                      (set! levelcounter 0)))))
+
+
+          ;;Falling
+          (if (or (eq? (player-vstate (world-player world)) 'idle) (eq? (player-vstate (world-player world)) 'falling))
+              (begin
+                (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
+                                         (inexact->exact (floor (/ (player-posx (world-player world)) tile-width)))) 4)
+                        (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (+ (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))) 1))
+                                         (inexact->exact (floor (/ (+ tile-width (player-posx (world-player world))) tile-width)))) 4))
+                    (begin
+                      (world-gamestate-set! world 'death-screen)
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)
+                      (set! levelcounter 0)))))
+          
+          ;;Jumping
+          (if (eq? (player-vstate (world-player world)) 'jump)
+              (begin
+                (if (or (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))))
+                                         (inexact->exact (floor (/ ( player-posx (world-player world)) tile-width)))) 4)
+                        (eq? (vector-ref (vector-ref (getlevel levellist levelcounter) (inexact->exact (floor (/ (player-posy (world-player world)) tile-height))))
+                                         (inexact->exact (floor (/ (+ tile-width (player-posx (world-player world))) tile-width)))) 4) 
+                        )
+                    (begin
+                      (world-gamestate-set! world 'death-screen)
+                      (enemy-posx-set! (world-enemy world) (- 0 tile-width))
+                      (enemy-posy-set! (world-enemy world) (- 0 tile-width))
+                      (set! enemyX '(0))
+                      (set! enemyY '(0))
+                      (set! enemycounter 0)
+                      (set! levelcounter 0)))))
+
 
           ;; Level Complete
           (if (eq? (player-hstate (world-player world)) 'right)
